@@ -1,0 +1,50 @@
+<div class="flex-container">
+  <div class="search-container">
+    <h3 class="text-center my-4">Search for Weather</h3>
+    <form
+      (ngSubmit)="sendFormData(weatherSearchForm.value)"
+      [formGroup]="weatherSearchForm"
+    >
+      <div class="form-group">
+        <input
+          aria-describedby="weatherLocation"
+          class="form-control"
+          formControlName="location"
+          id="weatherLocation"
+          placeholder="Please input a Location"
+          type="text"
+        />
+      </div>
+      <div class="text-center">
+        <button class="btn btn-success btn-md" type="submit">
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="result-container">
+    <h3 class="text-center my-4">Weather Data</h3>
+    <p class="text-center">
+      Location:
+      {{ this.weatherData?.location.name }}.
+    </p>
+    <p class="text-center">
+      Current weather conditions:
+      {{ this.weatherData?.current.weather_descriptions.join(", ") }}.
+    </p>
+    <p class="text-center">
+      <select (change)="onMetricChange($event.target.value)" class="custom-select-sm">
+        <option *ngFor="let i of this.metrics">{{i}}</option>
+      </select>
+      Temperature : {{ computeTemperature(this.weatherData?.current.temperature) }} {{ this.metric.toUpperCase() }}.
+    </p>
+
+  </div>
+  <div class="top-searches">
+    <h3 class="text-center my-4">Top Locations</h3>
+    <ul>
+      <li *ngFor="let location of getLocations()">{{ this.startCase(location) }}</li>
+    </ul>
+  </div>
+</div>
+
